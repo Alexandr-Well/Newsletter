@@ -49,12 +49,12 @@ celery -A app_mail beat -l info -P eventlet
 ## URLS
 ***
 ```
-http://0.0.0.0:8000/docs/
-http://0.0.0.0:8000/api/clients/
-http://0.0.0.0:8000/api/newsletter/
-http://0.0.0.0:8000/api/newsletter/newsletter_info/
-http://0.0.0.0:8000/api/newsletter/<pk>/message_info/
-http://0.0.0.0:8000/api/messages/
+http://127.0.0.1:8000/docs/
+http://127.0.0.1:8000/api/clients/
+http://127.0.0.1:8000/api/newsletter/
+http://127.0.0.1:8000/api/newsletter/newsletter_info/
+http://127.0.0.1:8000/api/newsletter/<pk>/message_info/
+http://127.0.0.1:8000/api/messages/
 ```
 ***
 ## Выполненные дополнительные задания:
