@@ -19,7 +19,6 @@ git clone https://github.com/Alexandr-Well/Newsletter.git
 ```
 python -m venv venv
 ```
-SECRET_KEY
 3. В файле .evn заполнить необходимые данные:
 ```
 SECRET_KEY - ключь проекта Django
