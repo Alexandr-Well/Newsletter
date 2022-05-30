@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+  redis:
+    container_name: redis
+    image: redis:latest
+    command: docker run -p 127.0.0.1:6379:6379 redis:latest
+    restart: unless-stopped
+  celery:
+      build: .
+      restart: always
+      command: bash -c "cd app_mail && celery -A app_mail worker -l info -P eventlet && celery -A app_mail beat -l info -P eventlet"
+      volumes:
+        - .:/app
+      environment:
+        - CELERY_BROKER_URL='redis://127.0.0.1:6379/0'
+        - CELERY_RESULT_BACKEND='redis://127.0.0.1:6379/0'
+      depends_on:
+        - redis
+        - web
+  dashboard:
+      container_name: dashboard
+      build: .
+      command: bash -c "cd app_mail && celery -A app_mail flower --port=5555 -n flower"
+      ports:
+        - 5555:5555
+      environment:
+        - CELERY_BROKER_URL='redis://127.0.0.1:6379/0'
+        - CELERY_RESULT_BACKEND='redis://127.0.0.1:6379/0'
+      depends_on:
+        - redis
+        - web
+        - celery
